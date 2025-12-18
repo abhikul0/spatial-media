@@ -186,7 +186,13 @@ class Application(tk.Frame):
     def action_inject(self):
         """Inject metadata into new save files."""
         # Ask for output directory instead of single file
-        self.save_file = filedialog.askdirectory(title="Select Output Directory")
+        # Use the directory of the first input file as the default
+        initial_dir = os.path.dirname(self.in_file) if self.in_file else None
+        options = {'initialdir': initial_dir} if initial_dir else {}
+        self.save_file = filedialog.askdirectory(
+            title="Select Output Directory",
+            **options
+        )
         if not self.save_file:
             return
 
