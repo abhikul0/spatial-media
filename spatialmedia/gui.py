@@ -235,11 +235,11 @@ class Application(tk.Frame):
 
     def set_error(self, text):
         self.label_message["text"] = text
-        self.label_message.config(fg="red")
+        self.label_message.config(fg="#ffcccc")  # Light red for dark background
 
     def set_message(self, text):
         self.label_message["text"] = text
-        self.label_message.config(fg="blue")
+        self.label_message.config(fg="#ccffcc")  # Light green for dark background
 
     def create_widgets(self):
         """Sets up GUI contents."""
@@ -251,7 +251,7 @@ class Application(tk.Frame):
 
         row = row + 1
         column = 0
-        self.label_message = tk.Label(self)
+        self.label_message = tk.Label(self, fg="#ffffff", bg="#2d2d2d")
         self.label_message["text"] = "Click Open to open your 360 video."
         self.label_message.grid(
             row=row,
@@ -264,12 +264,12 @@ class Application(tk.Frame):
         )
 
         row = row + 1
-        separator = tk.Frame(self, relief=tk.GROOVE, bd=1, height=2, bg="white")
+        separator = tk.Frame(self, relief=tk.GROOVE, bd=1, height=2, bg="#333333")
         separator.grid(columnspan=row, padx=PAD_X, pady=4, sticky="n" + "e" + "s" + "w")
 
         # Spherical Checkbox
         row += 1
-        self.label_spherical = tk.Label(self, anchor="w")
+        self.label_spherical = tk.Label(self, anchor="w", fg="#ffffff", bg="#2d2d2d")
         self.label_spherical["text"] = "My video is spherical (360)"
         self.label_spherical.grid(
             row=row, column=column, padx=PAD_X, pady=7, sticky="w"
@@ -277,27 +277,27 @@ class Application(tk.Frame):
         column += 1
 
         self.var_spherical = tk.IntVar()
-        self.checkbox_spherical = tk.Checkbutton(self, variable=self.var_spherical)
+        self.checkbox_spherical = tk.Checkbutton(self, variable=self.var_spherical, fg="#ffffff", bg="#2d2d2d", selectcolor="#2d2d2d", activebackground="#2d2d2d", activeforeground="#ffffff")
         self.checkbox_spherical["command"] = self.action_set_spherical
         self.checkbox_spherical.grid(row=row, column=column, padx=PAD_X, pady=2)
 
         # 3D
         row = row + 1
         column = 0
-        self.label_3D = tk.Label(self, anchor="w")
+        self.label_3D = tk.Label(self, anchor="w", fg="#ffffff", bg="#2d2d2d")
         self.label_3D["text"] = "My video is stereoscopic 3D (top/bottom layout)"
         self.label_3D.grid(row=row, column=column, padx=PAD_X, pady=7, sticky="w")
         column += 1
 
         self.var_3d = tk.IntVar()
-        self.checkbox_3D = tk.Checkbutton(self, variable=self.var_3d)
+        self.checkbox_3D = tk.Checkbutton(self, variable=self.var_3d, fg="#ffffff", bg="#2d2d2d", selectcolor="#2d2d2d", activebackground="#2d2d2d", activeforeground="#ffffff")
         self.checkbox_3D["command"] = self.action_set_3d
         self.checkbox_3D.grid(row=row, column=column, padx=PAD_X, pady=2)
 
         # Spatial Audio Checkbox
         row += 1
         column = 0
-        self.label_spatial_audio = tk.Label(self, anchor="w", justify=tk.LEFT)
+        self.label_spatial_audio = tk.Label(self, anchor="w", justify=tk.LEFT, fg="#ffffff", bg="#2d2d2d")
         self.label_spatial_audio["text"] = SPATIAL_AUDIO_LABEL
         self.label_spatial_audio.grid(
             row=row, column=column, padx=PAD_X, pady=7, sticky="w"
@@ -306,13 +306,13 @@ class Application(tk.Frame):
         column += 1
         self.var_spatial_audio = tk.IntVar()
         self.checkbox_spatial_audio = tk.Checkbutton(
-            self, variable=self.var_spatial_audio
+            self, variable=self.var_spatial_audio, fg="#ffffff", bg="#2d2d2d", selectcolor="#2d2d2d", activebackground="#2d2d2d", activeforeground="#ffffff"
         )
         self.checkbox_spatial_audio["command"] = self.action_set_spatial_audio
         self.checkbox_spatial_audio.grid(row=row, column=column, padx=0, pady=0)
 
         row = row + 1
-        separator = tk.Frame(self, relief=tk.GROOVE, bd=1, height=2, bg="white")
+        separator = tk.Frame(self, relief=tk.GROOVE, bd=1, height=2, bg="#333333")
         separator.grid(
             columnspan=row, padx=PAD_X, pady=10, sticky="n" + "e" + "s" + "w"
         )
@@ -324,7 +324,7 @@ class Application(tk.Frame):
         buttons_frame.grid(row=row, column=0, columnspan=3, padx=PAD_X, pady=10)
 
         style = ttk.Style()
-        style.configure("TButton", foreground="black")
+        style.configure("TButton", foreground="#ffffff", background="#333333")
 
         self.button_open = ttk.Button(buttons_frame)
         self.button_open["text"] = "Open"
@@ -339,6 +339,7 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         master.wm_title("Spatial Media Metadata Injector")
         master.config(menu=tk.Menu(master))
+        
         self.title = "Spatial Media Metadata Injector"
         self.open_options = {}
         self.open_options["filetypes"] = [("Videos", ("*.mov", "*.mp4"))]
@@ -347,6 +348,11 @@ class Application(tk.Frame):
         self.save_options = {}
 
         tk.Frame.__init__(self, master)
+        
+        # Set dark theme colors
+        master.config(bg="#2d2d2d")
+        self.config(bg="#2d2d2d")
+        
         self.create_widgets()
         self.pack()
 
